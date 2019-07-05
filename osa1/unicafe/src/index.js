@@ -3,21 +3,28 @@ import ReactDOM from 'react-dom'
 
 const Header = ({text}) => (<h1>{text}</h1>)
 
-const Statistic = ({name, stat}) => (<div>{name} {stat}</div>)
+const Statistic = ({name, stat}) => (
+  <tr>
+    <td>{name}</td>
+    <td>{stat}</td> 
+  </tr>
+)
 
 const Statistics = ({good, neutral, bad}) => {
   if (good + neutral + bad === 0) {
     return (<p>No feedback given</p>)
   }
   return (
-    <>
-      <Statistic name="good" stat={good} />
-      <Statistic name="neutral" stat={neutral} />
-      <Statistic name="bad" stat={bad} />
-      <Statistic name="all" stat={good + neutral + bad} />
-      <Statistic name="average" stat={(good - bad) / (good + neutral + bad)} />
-      <Statistic name="positive" stat={(good / (good + neutral + bad) * 100) + ' %'} />
-    </>
+    <table>
+      <tbody>
+        <Statistic name="good" stat={good} />
+        <Statistic name="neutral" stat={neutral} />
+        <Statistic name="bad" stat={bad} />
+        <Statistic name="all" stat={good + neutral + bad} />
+        <Statistic name="average" stat={(good - bad) / (good + neutral + bad)} />
+        <Statistic name="positive" stat={(good / (good + neutral + bad) * 100) + ' %'} />
+      </tbody>
+    </table>
   )
 }
 
