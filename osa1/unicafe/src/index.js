@@ -3,9 +3,20 @@ import ReactDOM from 'react-dom'
 
 const Header = ({text}) => (<h1>{text}</h1>)
 
+const Button = ({name, onClick}) => (<button onClick={onClick}>{name}</button>)
+
 const Stat = ({name, stat}) => (<div>{name} {stat}</div>)
 
-const Button = ({name, onClick}) => (<button onClick={onClick}>{name}</button>)
+const Statistics = ({stats}) => (
+    <>
+      <Stat name={[stats[0].name]} stat={stats[0].stat} />
+      <Stat name={[stats[1].name]} stat={stats[1].stat} />
+      <Stat name={[stats[2].name]} stat={stats[2].stat} />
+      <Stat name={[stats[3].name]} stat={stats[3].stat} />
+      <Stat name={[stats[4].name]} stat={stats[4].stat} />
+      <Stat name={[stats[5].name]} stat={stats[5].stat} />
+    </>
+)
 
 const App = () => {
   // tallenna napit omaan tilaansa
@@ -21,12 +32,14 @@ const App = () => {
       <Button name="bad" onClick={() => setBad(bad +1)} />
 
       <Header text="statistics" />
-      <Stat name="good" stat={good} />
-      <Stat name="neutral" stat={neutral} />
-      <Stat name="bad" stat={bad} />
-      <Stat name="all" stat={good + neutral + bad} />
-      <Stat name="average" stat={(good - bad) / (good + neutral + bad)} />
-      <Stat name="positive" stat={(good / (good + neutral + bad) * 100) + ' %'} />
+      <Statistics stats = {[
+        {name:"good", stat:good},
+        {name:"neutral", stat:neutral},
+        {name:"bad", stat:bad},
+        {name:"all", stat:good + neutral + bad},
+        {name:"average", stat:(good - bad) / (good + neutral + bad)},
+        {name:"positive", stat:(good / (good + neutral + bad) * 100) + ' %'}
+      ]} />
     </div>
   )
 }
