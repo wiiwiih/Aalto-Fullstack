@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 
 const Header = ({text}) => (<h1>{text}</h1>)
 
-const Stat = ({name, stat}) => (<div>{name} {stat}</div>)
+const Statistic = ({name, stat}) => (<div>{name} {stat}</div>)
 
 const Statistics = ({good, neutral, bad}) => {
   if (good + neutral + bad === 0) {
@@ -11,12 +11,12 @@ const Statistics = ({good, neutral, bad}) => {
   }
   return (
     <>
-      <Stat name="good" stat={good} />
-      <Stat name="neutral" stat={neutral} />
-      <Stat name="bad" stat={bad} />
-      <Stat name="all" stat={good + neutral + bad} />
-      <Stat name="average" stat={(good - bad) / (good + neutral + bad)} />
-      <Stat name="positive" stat={(good / (good + neutral + bad) * 100) + ' %'} />
+      <Statistic name="good" stat={good} />
+      <Statistic name="neutral" stat={neutral} />
+      <Statistic name="bad" stat={bad} />
+      <Statistic name="all" stat={good + neutral + bad} />
+      <Statistic name="average" stat={(good - bad) / (good + neutral + bad)} />
+      <Statistic name="positive" stat={(good / (good + neutral + bad) * 100) + ' %'} />
     </>
   )
 }
