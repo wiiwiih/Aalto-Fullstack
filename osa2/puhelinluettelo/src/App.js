@@ -5,13 +5,19 @@ const App = () => {
   const [ persons, setPersons] = useState([
     { 
       name: 'Arto Hellas',
+      number: '040-1234567',
       id: 'Arto Hellas'
     }
   ]) 
   const [ newName, setNewName ] = useState('')
+  const [ newNumber, setNewNumber ] = useState('')
 
   const HandleNameChange = (event) => {
     setNewName(event.target.value)
+  }
+
+  const HandleNumberChange = (event) => {
+    setNewNumber(event.target.value)
   }
 
   const addPerson = (event) => {
@@ -22,11 +28,13 @@ const App = () => {
     } else {
       const newPerson = {
         name: newName,
+        number: newNumber,
         id: newName
       }
 
       setPersons(persons.concat(newPerson))
       setNewName('')
+      setNewNumber('')
     }
   }
 
@@ -37,6 +45,10 @@ const App = () => {
         <div>
           name: <input value={newName}
                        onChange={HandleNameChange} />
+        </div>
+        <div>
+          number: <input value={newNumber}
+                       onChange={HandleNumberChange} />
         </div>
         <div>
           <button type="submit">add</button>
