@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import PhonebookTable from './components/PhonebookTable'
+import FilterForm from './components/FilterForm'
+import PersonForm from './components/PersonForm'
 
 const App = () => {
   const [ persons, setPersons] = useState([
@@ -28,7 +30,7 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()
 
-    if (persons.some((person) => (person.name === newName))) {
+    if (persons.some((person) => (person.name.toLowerCase() === newName.toLowerCase()))) {
       window.alert(`${newName} is already added to phonebook`)
     } else {
       const newPerson = {
@@ -46,24 +48,9 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-      filter names: <input value={filterText}
-                     onChange={HandleFilterChange} />
-      </div>
+      <FilterForm value={filterText} onChange={HandleFilterChange} />
       <h2>Add new person</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input value={newName}
-                       onChange={HandleNameChange} />
-        </div>
-        <div>
-          number: <input value={newNumber}
-                         onChange={HandleNumberChange} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm name={newName} onNameChange={HandleNameChange} number={newNumber} onNumberChange={HandleNumberChange} onSubmit={addPerson} />
       <h2>Numbers</h2>
       <PhonebookTable persons={persons.filter(person => person.name.toLowerCase().includes(filterText.toLowerCase()))} />
     </div>
