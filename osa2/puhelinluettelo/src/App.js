@@ -3,12 +3,15 @@ import phonebookService from './services/Phonebook'
 import PhonebookTable from './components/PhonebookTable'
 import FilterForm from './components/FilterForm'
 import PersonForm from './components/PersonForm'
+import Notification from './components/Notification'
 
 const App = () => {
   const [ persons, setPersons] = useState([]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ filterText, setFilterText ] = useState('')
+  const [ notification, setNotification ] = useState(null)
+  const [ error, setError ] = useState(null)
 
   useEffect(() => {
     phonebookService
@@ -42,10 +45,19 @@ const App = () => {
           .update(changedPerson.id, changedPerson)
           .then(returnedPerson => {
             setPersons(persons.map(person => person.id !== changedPerson.id ? person : returnedPerson))
+            
+            setNotification(`${returnedPerson.name}'s number was changed`)
+            setTimeout(() => {
+              setNotification(null)
+            }, 3000)
           })
           .catch(error => {
-            alert(`${changedPerson.name} was already deleted from the server`)
             setPersons(persons.filter(p => p.id !== changedPerson.id))
+
+            setError(`${changedPerson.name} has already been removed from the server`)
+            setTimeout(() => {
+              setError(null)
+            }, 5000)
           })
       }
     } else {
@@ -60,6 +72,11 @@ const App = () => {
           setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
+
+          setNotification(`${returnedPerson.name} was added`)
+            setTimeout(() => {
+              setNotification(null)
+            }, 3000)
         })
       
     }
@@ -71,9 +88,11 @@ const App = () => {
         .remove(selectedPerson.id)
         .then(() => {
           setPersons(persons.filter(p => p.id !== selectedPerson.id))
-          alert(
-            `${selectedPerson.name} was deleted`
-          )
+
+          setNotification(`${selectedPerson.name} was deleted`)
+            setTimeout(() => {
+              setNotification(null)
+            }, 3000)
         })
     }
   }
@@ -81,6 +100,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notification} isError={false} />
+      <Notification message={error} isError={true} />
       <FilterForm value={filterText} onChange={HandleFilterChange} />
       <h2>Add new person</h2>
       <PersonForm name={newName} onNameChange={HandleNameChange} number={newNumber} onNumberChange={HandleNumberChange} onSubmit={addPerson} />
